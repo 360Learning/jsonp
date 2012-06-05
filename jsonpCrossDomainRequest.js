@@ -27,10 +27,24 @@ var XDomReq = (function () {
         document.body.appendChild(request);
     };
     
+    var addParams = function (url, params) {
+        if (url.indexOf("?") === -1) {
+            url += "?";
+        }
+        if (typeof params !== 'undefined') {
+            for (var key in params) {
+                if (params.hasOwnProperty(key)) {
+                    url += "&" + key + "=" + encodeURIComponent(params[key]);
+                }
+            }
+        }
+        return url;
+    };
+    
     return {
         send: send,
-        callbacks: callbacks //this is to make the callbacks accessible when the browser executes the response
+        addParams: addParams,
+        callbacks: callbacks //this is to make the callbacks accessible, it must not be used
     };
     
 })();
-
